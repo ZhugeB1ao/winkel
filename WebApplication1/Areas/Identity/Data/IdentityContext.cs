@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Data;
+namespace WebApplication1.Areas.Identity.Data;
 
 public class IdentityContext : IdentityDbContext<IdentityUser>
 {

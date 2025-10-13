@@ -1,0 +1,28 @@
+# Build Folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Visual Studio
+.vs/
+*.vscode/
+
+# Logs
+*.log
+
+# Database files
+*.db
+
+# Executables and Debug files
+*.exe
+*.dll
+*.pdb
+
+# Rider
+.idea/
+
+# macOS specific
+.DS_Store

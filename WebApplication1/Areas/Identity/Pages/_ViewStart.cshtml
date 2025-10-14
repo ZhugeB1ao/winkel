@@ -1,4 +1,10 @@
-
 @{
-    Layout = "/Views/Shared/_Layout.cshtml";
+    if (ViewData["HideLayout"] != null && (bool)ViewData["HideLayout"])
+    {
+        Layout = "~/Views/Shared/_MinimalLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }

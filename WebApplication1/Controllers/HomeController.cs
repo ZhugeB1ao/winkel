@@ -1,23 +1,28 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.AppData;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers;
 
+[Route("Home")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
+    
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
     }
 
+    [HttpGet("")]
+    // [HttpGet("Index")]
     public IActionResult Index()
     {
         return View();
     }
-
+    
+    [HttpGet("Privacy")]
     public IActionResult Privacy()
     {
         return View();

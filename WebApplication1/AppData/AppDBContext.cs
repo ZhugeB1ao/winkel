@@ -13,14 +13,29 @@ public class AppDBContext : IdentityDbContext<IdentityUser>
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
-           
+        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Children)
+            .WithOne(c => c.Parent)
+            .HasForeignKey(c => c.ParentId)
+            .OnDelete(DeleteBehavior.Restrict); 
+
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Category)
+            .WithMany(c => c.Products)
+            .HasForeignKey(p => p.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        base.OnModelCreating(modelBuilder);
     }
     
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<OrderProduct> OrderProducts { get; set; } = null!;
+    public DbSet<AppUser> AppUsers { get; set; } = null!;
+    
+   
+
 }

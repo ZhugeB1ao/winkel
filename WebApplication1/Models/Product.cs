@@ -11,6 +11,8 @@ public class Product
     public int CategoryId { get; set; }
     
     public string? Picture { get; set; }
+
+    public int Sales { get; set; } = 0;
     public Category Category { get; set; }
     
     public ICollection<OrderProduct>? OrderProducts { get; set; }

@@ -28,10 +28,26 @@ public class ProductController : Controller
         }
 
         var categories = _context.Categories.ToList();
+        
+        var parent = product.Category.Parent ?? product.Category;
 
+        var childIds = parent.Children.Select(c => c.Id).ToList();
+        childIds.Add(parent.Id);
+        
+        var relatedProducts = _context.Products
+            .Where(p => childIds.Contains(p.CategoryId) && p.Slug != slug)
+            .Take(4)
+            .ToList();
+
+        foreach (var p in relatedProducts)
+        {
+            Console.WriteLine($"ID: {p.Id}, Name: {p.Name}, CategoryId: {p.CategoryId}");
+        }
+        
         var view = new ShopView
         {
             Categories = categories,
+            Products = relatedProducts,
             CurrentProduct = product,
             CurrentCategory = product.Category
         };

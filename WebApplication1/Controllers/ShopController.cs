@@ -40,6 +40,7 @@ public class ShopController : Controller
             return NotFound();
         }
 
+        // Get id of all children category
         var subCategoryIds = categories
             .Where(c => c.ParentId == currentCategory.Id)
             .Select(c => c.Id)
@@ -55,7 +56,7 @@ public class ShopController : Controller
         {
             Categories = categories,
             Products = products,
-            CurrentCategory = currentCategory
+            // CurrentCategory = currentCategory
         };
 
         return View(view);

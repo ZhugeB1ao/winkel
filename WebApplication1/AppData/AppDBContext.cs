@@ -6,7 +6,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.AppData;
 
-public class AppDBContext : IdentityDbContext<IdentityUser>
+public class AppDBContext : IdentityDbContext<AppUser>
 {
     public AppDBContext(DbContextOptions<AppDBContext> options)
         : base(options)

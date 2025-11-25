@@ -50,6 +50,8 @@ public class UserController : Controller
             user.FullName = model.FullName;
             user.PhoneNumber = model.Phone;
             user.Address = model.Address;
+            user.EmailConfirmed = true;
+            
             await _userStore.SetUserNameAsync(user, model.Email, CancellationToken.None);
             
             // await _emailStore.SetEmailAsync(user, model.Email, CancellationToken.None);
@@ -95,7 +97,52 @@ public class UserController : Controller
 
         return View();
     }
+
+    public IActionResult Login()
+    {
+        return View();
+    }
     
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "")
+    {
+        // returnUrl ??= Url.Content("~/");
+        // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (ModelState.IsValid)
+        {
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User logged in.");
+                return RedirectToAction("Index", "Shop");
+            }
+            // if (result.RequiresTwoFactor)
+            // {
+            //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            // }
+            // if (result.IsLockedOut)
+            // {
+            //     _logger.LogWarning("User account locked out.");
+            //     return RedirectToPage("./Lockout");
+            // }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View();
+            }
+        }
+        
+        return View(model);
+    }
+    
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
     private AppUser CreateUser()
     {
         try

@@ -22,4 +22,14 @@
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.*" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Shop\Category\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Product\index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shop\Product\index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Product\index.cshtml" />
+    </ItemGroup>
+
 </Project>

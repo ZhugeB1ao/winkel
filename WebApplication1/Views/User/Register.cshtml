@@ -1,0 +1,84 @@
+@model WebApplication1.Models.RegisterViewModel;
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <form id="registerForm" asp-controller="User" asp-action="Register" method="post">
+            <h2 class="text-center">Create a new account</h2>
+            <hr />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row g-3">
+
+                <!-- Email - full width -->
+                <div class="col-12 mb-3">
+                    <div class="form-floating">
+                        <input asp-for="Email" class="form-control" autocomplete="email" placeholder="abc@example.com" />
+                        <label asp-for="Email"></label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input asp-for="Password" class="form-control" autocomplete="new-password" placeholder="password" />
+                        <label asp-for="Password"></label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Confirm password -->
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="confirm password" />
+                        <label asp-for="ConfirmPassword"></label>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Full Name -->
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input asp-for="FullName" class="form-control" autocomplete="name" placeholder="Steve Jobs" />
+                        <label asp-for="FullName"></label>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input asp-for="Phone" class="form-control" autocomplete="tel" placeholder="0123456789" />
+                        <label asp-for="Phone"></label>
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Address - full width -->
+                <div class="col-12 mb-3">
+                    <div class="form-floating">
+                        <input asp-for="Address" class="form-control" autocomplete="street-address" placeholder="123 Main St" />
+                        <label asp-for="Address"></label>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="col-12 mb-5">
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">
+                        Register
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

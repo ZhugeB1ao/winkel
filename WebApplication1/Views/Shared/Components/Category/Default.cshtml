@@ -1,0 +1,21 @@
+@model List<WebApplication1.Models.Category>
+
+@* <div class="col-md-4 col-lg-2 sidebar"> *@
+    <ul style="list-style: none; padding-left: 0;">
+        @foreach (var cat in Model.Where(c => c.ParentId == null))
+        {
+            <div class="sidebar-box-2">
+                <h2 class="heading mb-4">
+                    @* <li><a href="~/Product/ListPro/@cat.Id">@cat.Name</a></li> *@
+                    <li><a asp-controller="Product" asp-action="ListPro" asp-route-id="@cat.Id">@cat.Name</a></li>
+                </h2>
+                <ul>
+                    @foreach (var sub in Model.Where(s => s.ParentId == cat.Id))
+                    {
+                        <li><a asp-controller="Product" asp-action="ListPro" asp-route-id="@sub.Id">@sub.Name</a></li>
+                    }
+                </ul>
+            </div>
+        }
+    </ul>
+@* </div> *@

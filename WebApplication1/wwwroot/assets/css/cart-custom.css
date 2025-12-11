@@ -1,0 +1,92 @@
+/* Add to Cart Button Styling */
+.btn-add-to-cart {
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-add-to-cart.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.btn-add-to-cart.btn-success {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+/* Toast Notification Styles */
+.custom-toast {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    min-width: 300px;
+    padding: 16px 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+}
+
+.custom-toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.custom-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.custom-toast-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.custom-toast-success .custom-toast-icon {
+    background-color: #28a745;
+    color: white;
+}
+
+.custom-toast-error .custom-toast-icon {
+    background-color: #dc3545;
+    color: white;
+}
+
+.custom-toast-message {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.custom-toast-success {
+    border-left: 4px solid #28a745;
+}
+
+.custom-toast-error {
+    border-left: 4px solid #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .custom-toast {
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+    }
+}
+
+/* Cart Item Row Animation */
+.cart-item-row {
+    transition: opacity 0.3s ease;
+}

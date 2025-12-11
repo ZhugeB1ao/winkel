@@ -1,0 +1,1100 @@
+================================================================================
+                    TEST CASES - WEBAPPLICATION1
+                    E-COMMERCE WEB APPLICATION
+================================================================================
+
+Project: ASP.NET Core MVC E-Commerce Application
+Date: 2025-12-11
+Tester: [Your Name]
+
+================================================================================
+                        PHẦN 1: BLACK BOX TESTING
+================================================================================
+
+Black Box Testing tập trung vào kiểm thử chức năng của hệ thống mà không cần 
+biết cấu trúc code bên trong. Kiểm thử dựa trên yêu cầu và đặc tả của hệ thống.
+
+--------------------------------------------------------------------------------
+1. MODULE ĐĂNG KÝ TÀI KHOẢN (User Registration)
+--------------------------------------------------------------------------------
+
+TC_BB_REG_001: Đăng ký thành công với thông tin hợp lệ
+- Mô tả: Kiểm tra đăng ký tài khoản mới với đầy đủ thông tin hợp lệ
+- Điều kiện tiên quyết: Người dùng chưa có tài khoản
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký (/User/Register)
+  2. Nhập Email: test@example.com
+  3. Nhập Password: Test@123456
+  4. Nhập Confirm Password: Test@123456
+  5. Nhập Full Name: Nguyen Van A
+  6. Nhập Phone: 0912345678
+  7. Nhập Address: 123 ABC Street
+  8. Click nút Register
+- Kết quả mong đợi:
+  * Tài khoản được tạo thành công
+  * Tự động đăng nhập
+  * Chuyển hướng đến trang Shop (/Shop/Index)
+  * Session được tạo cho người dùng
+
+TC_BB_REG_002: Đăng ký thất bại - Email không hợp lệ
+- Mô tả: Kiểm tra validation email format
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký
+  2. Nhập Email: invalidemail (không có @)
+  3. Nhập các thông tin khác hợp lệ
+  4. Click Register
+- Kết quả mong đợi:
+  * Hiển thị lỗi validation "Email không hợp lệ"
+  * Form không được submit
+  * Người dùng vẫn ở trang đăng ký
+
+TC_BB_REG_003: Đăng ký thất bại - Password quá ngắn
+- Mô tả: Kiểm tra validation độ dài password
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký
+  2. Nhập Password: 12345 (< 6 ký tự)
+  3. Nhập các thông tin khác hợp lệ
+  4. Click Register
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Password phải có ít nhất 6 ký tự"
+  * Form không được submit
+
+TC_BB_REG_004: Đăng ký thất bại - Confirm Password không khớp
+- Mô tả: Kiểm tra validation confirm password
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký
+  2. Nhập Password: Test@123456
+  3. Nhập Confirm Password: Test@654321
+  4. Nhập các thông tin khác hợp lệ
+  5. Click Register
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Password và Confirm Password không khớp"
+  * Form không được submit
+
+TC_BB_REG_005: Đăng ký thất bại - Thiếu thông tin bắt buộc
+- Mô tả: Kiểm tra validation các trường required
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký
+  2. Để trống Full Name
+  3. Nhập các thông tin khác hợp lệ
+  4. Click Register
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Full Name là bắt buộc"
+  * Form không được submit
+
+TC_BB_REG_006: Đăng ký thất bại - Email đã tồn tại
+- Mô tả: Kiểm tra không cho phép đăng ký email trùng
+- Điều kiện tiên quyết: Email test@example.com đã tồn tại trong hệ thống
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký
+  2. Nhập Email: test@example.com (đã tồn tại)
+  3. Nhập các thông tin khác hợp lệ
+  4. Click Register
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Email đã được sử dụng"
+  * Form không được submit
+
+TC_BB_REG_007: Đăng ký thất bại - Số điện thoại không hợp lệ
+- Mô tả: Kiểm tra validation phone number
+- Các bước thực hiện:
+  1. Truy cập trang đăng ký
+  2. Nhập Phone: abc123 (không phải số)
+  3. Nhập các thông tin khác hợp lệ
+  4. Click Register
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Số điện thoại không hợp lệ"
+  * Form không được submit
+
+--------------------------------------------------------------------------------
+2. MODULE ĐĂNG NHẬP (User Login)
+--------------------------------------------------------------------------------
+
+TC_BB_LOGIN_001: Đăng nhập thành công
+- Mô tả: Kiểm tra đăng nhập với thông tin chính xác
+- Điều kiện tiên quyết: Tài khoản test@example.com đã tồn tại
+- Các bước thực hiện:
+  1. Truy cập trang đăng nhập (/User/Login)
+  2. Nhập Email: test@example.com
+  3. Nhập Password: Test@123456
+  4. Click Login
+- Kết quả mong đợi:
+  * Đăng nhập thành công
+  * Chuyển hướng đến trang Shop
+  * Session được tạo
+  * Hiển thị thông tin user trên navbar
+
+TC_BB_LOGIN_002: Đăng nhập thất bại - Sai password
+- Mô tả: Kiểm tra đăng nhập với password sai
+- Các bước thực hiện:
+  1. Truy cập trang đăng nhập
+  2. Nhập Email: test@example.com
+  3. Nhập Password: WrongPassword123
+  4. Click Login
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Invalid login attempt"
+  * Người dùng vẫn ở trang login
+  * Không tạo session
+
+TC_BB_LOGIN_003: Đăng nhập thất bại - Email không tồn tại
+- Mô tả: Kiểm tra đăng nhập với email chưa đăng ký
+- Các bước thực hiện:
+  1. Truy cập trang đăng nhập
+  2. Nhập Email: notexist@example.com
+  3. Nhập Password: Test@123456
+  4. Click Login
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Invalid login attempt"
+  * Không đăng nhập được
+
+TC_BB_LOGIN_004: Đăng nhập thất bại - Thiếu thông tin
+- Mô tả: Kiểm tra validation khi thiếu thông tin
+- Các bước thực hiện:
+  1. Truy cập trang đăng nhập
+  2. Để trống Email
+  3. Nhập Password: Test@123456
+  4. Click Login
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Email là bắt buộc"
+  * Form không được submit
+
+TC_BB_LOGIN_005: Đăng xuất thành công
+- Mô tả: Kiểm tra chức năng logout
+- Điều kiện tiên quyết: Người dùng đã đăng nhập
+- Các bước thực hiện:
+  1. Click nút Logout
+- Kết quả mong đợi:
+  * Đăng xuất thành công
+  * Session bị xóa
+  * Chuyển hướng về trang Home
+  * Navbar hiển thị Login/Register
+
+--------------------------------------------------------------------------------
+3. MODULE QUẢN LÝ SẢN PHẨM (Product Management)
+--------------------------------------------------------------------------------
+
+TC_BB_PROD_001: Xem danh sách sản phẩm
+- Mô tả: Kiểm tra hiển thị danh sách sản phẩm
+- Các bước thực hiện:
+  1. Truy cập trang Shop (/Shop/Index)
+- Kết quả mong đợi:
+  * Hiển thị danh sách tất cả sản phẩm
+  * Mỗi sản phẩm hiển thị: hình ảnh, tên, giá, mô tả
+  * Có nút "Add to Cart" cho mỗi sản phẩm
+
+TC_BB_PROD_002: Xem chi tiết sản phẩm
+- Mô tả: Kiểm tra trang chi tiết sản phẩm
+- Các bước thực hiện:
+  1. Truy cập trang Shop
+  2. Click vào một sản phẩm (ví dụ: Product ID = 1)
+  3. Chuyển đến /Product/Detail/1
+- Kết quả mong đợi:
+  * Hiển thị đầy đủ thông tin sản phẩm
+  * Hiển thị hình ảnh lớn
+  * Hiển thị tên, giá, mô tả chi tiết
+  * Có nút "Add to Cart"
+  * Hiển thị category của sản phẩm
+
+TC_BB_PROD_003: Xem sản phẩm theo danh mục
+- Mô tả: Kiểm tra lọc sản phẩm theo category
+- Các bước thực hiện:
+  1. Truy cập /Product/ListPro/1 (Category ID = 1)
+- Kết quả mong đợi:
+  * Hiển thị sản phẩm thuộc category ID = 1
+  * Hiển thị cả sản phẩm của child categories
+  * Không hiển thị sản phẩm của category khác
+
+TC_BB_PROD_004: Xem sản phẩm không tồn tại
+- Mô tả: Kiểm tra truy cập sản phẩm không tồn tại
+- Các bước thực hiện:
+  1. Truy cập /Product/Detail/99999 (ID không tồn tại)
+- Kết quả mong đợi:
+  * Hiển thị trang lỗi hoặc thông báo "Product not found"
+  * Không crash application
+
+--------------------------------------------------------------------------------
+4. MODULE GIỎ HÀNG (Shopping Cart)
+--------------------------------------------------------------------------------
+
+TC_BB_CART_001: Thêm sản phẩm vào giỏ hàng lần đầu
+- Mô tả: Kiểm tra thêm sản phẩm mới vào giỏ hàng
+- Điều kiện tiên quyết: Giỏ hàng trống
+- Các bước thực hiện:
+  1. Truy cập trang chi tiết sản phẩm
+  2. Click nút "Add to Cart"
+- Kết quả mong đợi:
+  * Hiển thị thông báo "Product added to cart successfully"
+  * Cart count trên navbar tăng lên 1
+  * Sản phẩm được lưu vào session
+  * Không reload trang (AJAX)
+
+TC_BB_CART_002: Thêm sản phẩm đã có trong giỏ hàng
+- Mô tả: Kiểm tra tăng số lượng sản phẩm đã có
+- Điều kiện tiên quyết: Sản phẩm A đã có trong giỏ với quantity = 1
+- Các bước thực hiện:
+  1. Truy cập trang chi tiết sản phẩm A
+  2. Click nút "Add to Cart"
+- Kết quả mong đợi:
+  * Quantity của sản phẩm A tăng lên 2
+  * Cart count trên navbar tăng lên 2
+  * Không tạo item mới trong giỏ hàng
+
+TC_BB_CART_003: Xem giỏ hàng
+- Mô tả: Kiểm tra hiển thị trang giỏ hàng
+- Điều kiện tiên quyết: Giỏ hàng có ít nhất 1 sản phẩm
+- Các bước thực hiện:
+  1. Truy cập /Cart/Index
+- Kết quả mong đợi:
+  * Hiển thị danh sách sản phẩm trong giỏ
+  * Mỗi item hiển thị: hình ảnh, tên, giá, số lượng
+  * Hiển thị tổng tiền
+  * Có nút Remove cho mỗi item
+  * Có nút Checkout
+
+TC_BB_CART_004: Xóa sản phẩm khỏi giỏ hàng
+- Mô tả: Kiểm tra xóa item từ cart
+- Điều kiện tiên quyết: Giỏ hàng có sản phẩm
+- Các bước thực hiện:
+  1. Truy cập trang Cart
+  2. Click nút "Remove" trên một sản phẩm
+- Kết quả mong đợi:
+  * Sản phẩm bị xóa khỏi giỏ hàng
+  * Cart count giảm xuống
+  * Tổng tiền được cập nhật
+  * Không reload trang (AJAX)
+  * Hiển thị thông báo "Item removed from cart"
+
+TC_BB_CART_005: Xem giỏ hàng trống
+- Mô tả: Kiểm tra hiển thị khi giỏ hàng trống
+- Điều kiện tiên quyết: Giỏ hàng không có sản phẩm
+- Các bước thực hiện:
+  1. Truy cập /Cart/Index
+- Kết quả mong đợi:
+  * Hiển thị thông báo "Giỏ hàng trống"
+  * Không hiển thị bảng sản phẩm
+  * Có link quay lại trang Shop
+
+TC_BB_CART_006: Thêm sản phẩm không tồn tại vào giỏ
+- Mô tả: Kiểm tra xử lý lỗi khi thêm sản phẩm không tồn tại
+- Các bước thực hiện:
+  1. Gửi AJAX request đến /Cart/AddAjax với productId = 99999
+- Kết quả mong đợi:
+  * Trả về JSON: { success: false, message: "Product not found" }
+  * Giỏ hàng không thay đổi
+  * Hiển thị thông báo lỗi
+
+--------------------------------------------------------------------------------
+5. MODULE THANH TOÁN (Checkout)
+--------------------------------------------------------------------------------
+
+TC_BB_CHECKOUT_001: Truy cập trang checkout
+- Mô tả: Kiểm tra hiển thị trang checkout
+- Điều kiện tiên quyết: Giỏ hàng có sản phẩm
+- Các bước thực hiện:
+  1. Truy cập /Checkout/Index
+- Kết quả mong đợi:
+  * Hiển thị form checkout
+  * Hiển thị thông tin giỏ hàng
+  * Hiển thị tổng tiền
+
+TC_BB_CHECKOUT_002: Checkout với giỏ hàng trống
+- Mô tả: Kiểm tra không cho checkout khi giỏ trống
+- Điều kiện tiên quyết: Giỏ hàng trống
+- Các bước thực hiện:
+  1. Truy cập /Checkout/Index
+- Kết quả mong đợi:
+  * Chuyển hướng về trang Cart
+  * Hiển thị thông báo "Giỏ hàng trống"
+
+--------------------------------------------------------------------------------
+6. MODULE ADMIN - QUẢN LÝ DANH MỤC (Admin Category Management)
+--------------------------------------------------------------------------------
+
+TC_BB_ADMIN_CAT_001: Xem danh sách categories (Admin)
+- Mô tả: Kiểm tra hiển thị danh sách categories trong admin
+- Điều kiện tiên quyết: Đăng nhập với tài khoản admin
+- Các bước thực hiện:
+  1. Truy cập /Admin/Categories/Index
+- Kết quả mong đợi:
+  * Hiển thị danh sách tất cả categories
+  * Hiển thị: ID, Name, Description, Slug, ParentId
+  * Có nút Create New, Edit, Delete cho mỗi category
+
+TC_BB_ADMIN_CAT_002: Tạo category mới
+- Mô tả: Kiểm tra tạo category mới
+- Điều kiện tiên quyết: Đăng nhập admin
+- Các bước thực hiện:
+  1. Truy cập /Admin/Categories/Create
+  2. Nhập Name: Electronics
+  3. Nhập Description: Electronic products
+  4. Nhập Slug: electronics
+  5. Chọn ParentId: 0 (root category)
+  6. Click Create
+- Kết quả mong đợi:
+  * Category mới được tạo trong database
+  * Chuyển hướng về trang Index
+  * Hiển thị category mới trong danh sách
+
+TC_BB_ADMIN_CAT_003: Sửa category
+- Mô tả: Kiểm tra chỉnh sửa category
+- Điều kiện tiên quyết: Category ID = 1 đã tồn tại
+- Các bước thực hiện:
+  1. Truy cập /Admin/Categories/Edit/1
+  2. Sửa Name thành "Updated Category"
+  3. Click Save
+- Kết quả mong đợi:
+  * Category được cập nhật trong database
+  * Chuyển hướng về trang Index
+  * Hiển thị thông tin đã cập nhật
+
+TC_BB_ADMIN_CAT_004: Xóa category
+- Mô tả: Kiểm tra xóa category
+- Điều kiện tiên quyết: Category ID = 5 tồn tại và không có sản phẩm
+- Các bước thực hiện:
+  1. Truy cập /Admin/Categories/Delete/5
+  2. Xác nhận xóa
+- Kết quả mong đợi:
+  * Category bị xóa khỏi database
+  * Chuyển hướng về trang Index
+  * Category không còn trong danh sách
+
+--------------------------------------------------------------------------------
+7. MODULE ADMIN - QUẢN LÝ SẢN PHẨM (Admin Product Management)
+--------------------------------------------------------------------------------
+
+TC_BB_ADMIN_PROD_001: Xem danh sách sản phẩm (Admin)
+- Mô tả: Kiểm tra hiển thị danh sách sản phẩm trong admin
+- Điều kiện tiên quyết: Đăng nhập admin
+- Các bước thực hiện:
+  1. Truy cập /Admin/Products/Index
+- Kết quả mong đợi:
+  * Hiển thị danh sách tất cả sản phẩm
+  * Hiển thị: ID, Name, Price, Category, Sales
+  * Có nút Create New, Edit, Delete
+
+TC_BB_ADMIN_PROD_002: Tạo sản phẩm mới
+- Mô tả: Kiểm tra tạo sản phẩm mới
+- Các bước thực hiện:
+  1. Truy cập /Admin/Products/Create
+  2. Nhập Name: iPhone 15
+  3. Nhập Description: Latest iPhone
+  4. Nhập Price: 999.99
+  5. Nhập Slug: iphone-15
+  6. Chọn CategoryId: 1
+  7. Upload Picture
+  8. Click Create
+- Kết quả mong đợi:
+  * Sản phẩm mới được tạo
+  * Hình ảnh được upload
+  * Chuyển hướng về Index
+
+TC_BB_ADMIN_PROD_003: Sửa sản phẩm
+- Mô tả: Kiểm tra chỉnh sửa sản phẩm
+- Các bước thực hiện:
+  1. Truy cập /Admin/Products/Edit/1
+  2. Sửa Price thành 899.99
+  3. Click Save
+- Kết quả mong đợi:
+  * Sản phẩm được cập nhật
+  * Giá mới hiển thị trên trang Shop
+
+TC_BB_ADMIN_PROD_004: Xóa sản phẩm
+- Mô tả: Kiểm tra xóa sản phẩm
+- Các bước thực hiện:
+  1. Truy cập /Admin/Products/Delete/10
+  2. Xác nhận xóa
+- Kết quả mong đợi:
+  * Sản phẩm bị xóa
+  * Không hiển thị trên trang Shop
+
+--------------------------------------------------------------------------------
+8. KIỂM THỬ PHÂN QUYỀN (Authorization Testing)
+--------------------------------------------------------------------------------
+
+TC_BB_AUTH_001: Truy cập Admin khi chưa đăng nhập
+- Mô tả: Kiểm tra bảo mật trang admin
+- Điều kiện tiên quyết: Chưa đăng nhập
+- Các bước thực hiện:
+  1. Truy cập /Admin/Products/Index
+- Kết quả mong đợi:
+  * Chuyển hướng đến trang Login
+  * Không cho phép truy cập
+
+TC_BB_AUTH_002: Truy cập Admin với user thường
+- Mô tả: Kiểm tra phân quyền admin
+- Điều kiện tiên quyết: Đăng nhập với user thường (không phải admin)
+- Các bước thực hiện:
+  1. Truy cập /Admin/Products/Index
+- Kết quả mong đợi:
+  * Hiển thị lỗi "Access Denied" hoặc chuyển hướng
+  * Không cho phép truy cập
+
+--------------------------------------------------------------------------------
+9. KIỂM THỬ SESSION & COOKIE
+--------------------------------------------------------------------------------
+
+TC_BB_SESSION_001: Giỏ hàng được lưu trong session
+- Mô tả: Kiểm tra persistence của giỏ hàng
+- Các bước thực hiện:
+  1. Thêm sản phẩm vào giỏ hàng
+  2. Đóng browser
+  3. Mở lại browser trong vòng 30 phút
+  4. Truy cập /Cart/Index
+- Kết quả mong đợi:
+  * Giỏ hàng vẫn còn sản phẩm
+  * Session cookie vẫn còn hiệu lực
+
+TC_BB_SESSION_002: Session hết hạn sau 30 phút
+- Mô tả: Kiểm tra session timeout
+- Các bước thực hiện:
+  1. Thêm sản phẩm vào giỏ hàng
+  2. Đợi 31 phút
+  3. Truy cập /Cart/Index
+- Kết quả mong đợi:
+  * Giỏ hàng trống
+  * Session đã hết hạn
+
+--------------------------------------------------------------------------------
+10. KIỂM THỬ GIAO DIỆN (UI Testing)
+--------------------------------------------------------------------------------
+
+TC_BB_UI_001: Responsive design trên mobile
+- Mô tả: Kiểm tra giao diện trên thiết bị di động
+- Các bước thực hiện:
+  1. Mở website trên mobile (hoặc resize browser < 768px)
+  2. Kiểm tra các trang: Home, Shop, Product Detail, Cart
+- Kết quả mong đợi:
+  * Layout responsive, không bị vỡ
+  * Menu collapse thành hamburger
+  * Hình ảnh scale phù hợp
+  * Text dễ đọc
+
+TC_BB_UI_002: Cart count hiển thị đúng
+- Mô tả: Kiểm tra số lượng sản phẩm trên navbar
+- Các bước thực hiện:
+  1. Thêm 3 sản phẩm vào giỏ (mỗi sản phẩm quantity = 1)
+  2. Kiểm tra cart count trên navbar
+- Kết quả mong đợi:
+  * Hiển thị số 3
+  * Cập nhật real-time khi thêm/xóa sản phẩm
+
+
+================================================================================
+                        PHẦN 2: WHITE BOX TESTING
+================================================================================
+
+White Box Testing tập trung vào kiểm thử cấu trúc code, logic bên trong, 
+và các đường đi (code paths) của hệ thống.
+
+--------------------------------------------------------------------------------
+1. KIỂM THỬ USERCONTROLLER
+--------------------------------------------------------------------------------
+
+TC_WB_USER_001: Register method - Path coverage
+- Mô tả: Kiểm tra tất cả các đường đi trong Register method
+- File: Controllers/UserController.cs
+- Method: Register(RegisterViewModel model, string returnUrl)
+- Test cases:
+
+  Path 1: ModelState.IsValid = false
+  - Input: model với Email = null
+  - Expected: 
+    * ModelState.IsValid = false
+    * Return View() (line 98)
+    * Không tạo user mới
+
+  Path 2: ModelState.IsValid = true, CreateAsync thành công
+  - Input: model hợp lệ, email chưa tồn tại
+  - Expected:
+    * CreateUser() được gọi (line 48)
+    * SetUserNameAsync được gọi (line 55)
+    * CreateAsync trả về result.Succeeded = true (line 61)
+    * SignInAsync được gọi (line 88)
+    * RedirectToAction("Index", "Shop") (line 89)
+
+  Path 3: ModelState.IsValid = true, CreateAsync thất bại
+  - Input: model hợp lệ nhưng email đã tồn tại
+  - Expected:
+    * CreateAsync trả về result.Succeeded = false
+    * Vòng lặp foreach (line 92-95) thêm errors vào ModelState
+    * Return View() (line 98)
+
+TC_WB_USER_002: Login method - Branch coverage
+- Mô tả: Kiểm tra các nhánh trong Login method
+- File: Controllers/UserController.cs
+- Method: Login(LoginViewModel model, string returnUrl)
+- Test cases:
+
+  Branch 1: ModelState.IsValid = false
+  - Input: Email = null
+  - Expected: Return View(model) (line 137)
+
+  Branch 2: PasswordSignInAsync thành công
+  - Input: Email và Password đúng
+  - Expected:
+    * result.Succeeded = true (line 116)
+    * Logger ghi log (line 118)
+    * RedirectToAction("Index", "Shop") (line 119)
+
+  Branch 3: PasswordSignInAsync thất bại
+  - Input: Email hoặc Password sai
+  - Expected:
+    * result.Succeeded = false
+    * Vào else block (line 130)
+    * ModelState.AddModelError (line 132)
+    * Return View() (line 133)
+
+TC_WB_USER_003: CreateUser method - Exception handling
+- Mô tả: Kiểm tra xử lý exception trong CreateUser
+- File: Controllers/UserController.cs
+- Method: CreateUser()
+- Test cases:
+
+  Test 1: Tạo instance thành công
+  - Expected: Return new AppUser()
+
+  Test 2: Không thể tạo instance
+  - Mock: Activator.CreateInstance throw exception
+  - Expected: Throw InvalidOperationException với message cụ thể
+
+TC_WB_USER_004: Logout method - Simple path
+- Mô tả: Kiểm tra Logout method
+- File: Controllers/UserController.cs
+- Method: Logout()
+- Test case:
+  - Expected:
+    * SignOutAsync được gọi (line 142)
+    * RedirectToAction("Index", "Home") (line 143)
+
+--------------------------------------------------------------------------------
+2. KIỂM THỬ CARTCONTROLLER
+--------------------------------------------------------------------------------
+
+TC_WB_CART_001: GetCartItems method - Conditional logic
+- Mô tả: Kiểm tra logic lấy cart từ session
+- File: Controllers/CartController.cs
+- Method: GetCartItems()
+- Test cases:
+
+  Case 1: Session có cart
+  - Setup: Session["cart"] = valid JSON string
+  - Expected:
+    * jsoncart != null (line 27)
+    * Return deserialized List<CartItem>
+
+  Case 2: Session không có cart
+  - Setup: Session["cart"] = null
+  - Expected:
+    * jsoncart = null
+    * Return new List<CartItem>() (line 29)
+
+TC_WB_CART_002: AddToCartAjax method - Path coverage
+- Mô tả: Kiểm tra tất cả paths trong AddToCartAjax
+- File: Controllers/CartController.cs
+- Method: AddToCartAjax([FromBody] int productId)
+- Test cases:
+
+  Path 1: Product không tồn tại
+  - Input: productId = 99999
+  - Expected:
+    * product = null (line 90)
+    * Return Json với success = false (line 92)
+    * Không gọi SaveCart
+
+  Path 2: Product tồn tại, chưa có trong cart
+  - Input: productId = 1, cart trống
+  - Expected:
+    * product != null
+    * cartItem = null (line 98)
+    * Vào else block (line 104)
+    * cart.Add() được gọi (line 106-110)
+    * SaveCart được gọi (line 113)
+    * Return Json với success = true, cartItemCount
+
+  Path 3: Product tồn tại, đã có trong cart
+  - Input: productId = 1, cart đã có product 1
+  - Expected:
+    * cartItem != null (line 100)
+    * cartItem.Quantity++ (line 102)
+    * SaveCart được gọi
+    * Return Json với success = true
+
+TC_WB_CART_003: RemoveItemAjax method - Branch coverage
+- Mô tả: Kiểm tra các nhánh trong RemoveItemAjax
+- File: Controllers/CartController.cs
+- Method: RemoveItemAjax([FromBody] int productId)
+- Test cases:
+
+  Branch 1: Item tồn tại trong cart
+  - Input: productId có trong cart
+  - Expected:
+    * cartItem != null (line 132)
+    * cart.Remove(cartItem) (line 134)
+    * SaveCart được gọi (line 135)
+    * Return Json với success = true, remainingItems
+
+  Branch 2: Item không tồn tại trong cart
+  - Input: productId không có trong cart
+  - Expected:
+    * cartItem = null
+    * Return Json với success = false (line 145-148)
+
+TC_WB_CART_004: SaveCart method - Session storage
+- Mô tả: Kiểm tra lưu cart vào session
+- File: Controllers/CartController.cs
+- Method: SaveCart(List<CartItem> cart)
+- Test case:
+  - Input: List<CartItem> với 2 items
+  - Expected:
+    * JsonConvert.SerializeObject được gọi (line 43)
+    * session.SetString(CARTKEY, jsoncart) (line 44)
+    * Session chứa JSON string hợp lệ
+
+TC_WB_CART_005: ClearCart method - Session removal
+- Mô tả: Kiểm tra xóa cart khỏi session
+- File: Controllers/CartController.cs
+- Method: ClearCart()
+- Test case:
+  - Expected:
+    * session.Remove(CARTKEY) được gọi (line 36)
+    * Session không còn key "cart"
+
+--------------------------------------------------------------------------------
+3. KIỂM THỬ PRODUCTCONTROLLER
+--------------------------------------------------------------------------------
+
+TC_WB_PROD_001: Detail method - Database query
+- Mô tả: Kiểm tra query sản phẩm từ database
+- File: Controllers/ProductController.cs
+- Method: Detail(int id)
+- Test cases:
+
+  Case 1: Product tồn tại
+  - Input: id = 1
+  - Expected:
+    * _context.Products.Find(1) trả về product
+    * Return View(product) với product != null
+
+  Case 2: Product không tồn tại
+  - Input: id = 99999
+  - Expected:
+    * _context.Products.Find(99999) trả về null
+    * Return View(null)
+
+TC_WB_PROD_002: ListPro method - Complex query logic
+- Mô tả: Kiểm tra logic lấy sản phẩm theo category và child categories
+- File: Controllers/ProductController.cs
+- Method: ListPro(int id)
+- Test cases:
+
+  Case 1: Category có child categories
+  - Input: id = 1, có 2 child categories (id = 2, 3)
+  - Expected:
+    * Query line 35-38 trả về [2, 3]
+    * childCategoryIds.Add(id) → [2, 3, 1] (line 40)
+    * Query line 43-45 lấy products với CategoryId in [1, 2, 3]
+    * Return View với đúng danh sách products
+
+  Case 2: Category không có child
+  - Input: id = 5, không có child
+  - Expected:
+    * Query line 35-38 trả về []
+    * childCategoryIds = [5]
+    * Chỉ lấy products với CategoryId = 5
+
+  Case 3: Category không tồn tại
+  - Input: id = 99999
+  - Expected:
+    * childCategoryIds = [99999]
+    * products = [] (empty list)
+    * Return View với empty list
+
+--------------------------------------------------------------------------------
+4. KIỂM THỬ SHOPCONTROLLER
+--------------------------------------------------------------------------------
+
+TC_WB_SHOP_001: Index method - Database query
+- Mô tả: Kiểm tra lấy tất cả sản phẩm
+- File: Controllers/ShopController.cs
+- Method: Index()
+- Test case:
+  - Expected:
+    * _context.Products.ToList() được gọi (line 23)
+    * Return View với List<Product>
+    * Tất cả products trong database được trả về
+
+--------------------------------------------------------------------------------
+5. KIỂM THỬ MODEL VALIDATION
+--------------------------------------------------------------------------------
+
+TC_WB_MODEL_001: RegisterViewModel validation
+- Mô tả: Kiểm tra Data Annotations trong RegisterViewModel
+- File: ViewModels/RegisterViewModel.cs
+- Test cases:
+
+  Test 1: Email validation
+  - Input: Email = "invalid"
+  - Expected: [EmailAddress] attribute fail validation
+
+  Test 2: Password length validation
+  - Input: Password = "12345" (< 6 chars)
+  - Expected: [StringLength] fail với MinimumLength = 6
+
+  Test 3: ConfirmPassword compare validation
+  - Input: Password = "Test@123", ConfirmPassword = "Test@456"
+  - Expected: [Compare("Password")] fail validation
+
+  Test 4: Required fields validation
+  - Input: FullName = null
+  - Expected: [Required] fail validation
+
+  Test 5: Phone validation
+  - Input: Phone = "abc123"
+  - Expected: [Phone] attribute fail validation
+
+TC_WB_MODEL_002: LoginViewModel validation
+- Mô tả: Kiểm tra validation trong LoginViewModel
+- File: ViewModels/LoginViewModel.cs
+- Test cases:
+
+  Test 1: Email required
+  - Input: Email = null
+  - Expected: [Required] fail
+
+  Test 2: Password length
+  - Input: Password = "123" (< 6 chars)
+  - Expected: [StringLength] fail
+
+TC_WB_MODEL_003: Product model relationships
+- Mô tả: Kiểm tra navigation properties
+- File: Models/Product.cs
+- Test cases:
+
+  Test 1: Category navigation
+  - Setup: Product với CategoryId = 1
+  - Expected: Product.Category load được Category entity
+
+  Test 2: OrderProducts collection
+  - Setup: Product có 3 orders
+  - Expected: Product.OrderProducts.Count = 3
+
+TC_WB_MODEL_004: Order model relationships
+- Mô tả: Kiểm tra Order relationships
+- File: Models/Order.cs
+- Test cases:
+
+  Test 1: OrderProducts collection
+  - Setup: Order với 5 products
+  - Expected: Order.OrderProducts.Count = 5
+
+  Test 2: UserId constraint
+  - Input: UserId với length > 450
+  - Expected: Validation error (StringLength = 450)
+
+TC_WB_MODEL_005: Category hierarchical structure
+- Mô tả: Kiểm tra cấu trúc phân cấp category
+- File: Models/Category.cs
+- Test cases:
+
+  Test 1: Parent-Child relationship
+  - Setup: Category A (ParentId = 0), Category B (ParentId = A.Id)
+  - Expected:
+    * A.Children chứa B
+    * B.Parent = A
+
+  Test 2: Root category
+  - Setup: Category với ParentId = 0
+  - Expected: Category.Parent = null
+
+  Test 3: Products collection
+  - Setup: Category có 10 products
+  - Expected: Category.Products.Count = 10
+
+--------------------------------------------------------------------------------
+6. KIỂM THỬ DATABASE CONTEXT
+--------------------------------------------------------------------------------
+
+TC_WB_DB_001: AppDBContext configuration
+- Mô tả: Kiểm tra DbContext setup
+- File: AppData/AppDBContext.cs
+- Test cases:
+
+  Test 1: Connection string
+  - Expected: UseSqlServer với connection string từ appsettings.json
+
+  Test 2: DbSet properties
+  - Expected:
+    * DbSet<Product> Products
+    * DbSet<Category> Categories
+    * DbSet<Order> Orders
+    * DbSet<OrderProduct> OrderProducts
+
+TC_WB_DB_002: Entity Framework migrations
+- Mô tả: Kiểm tra migrations
+- Directory: Migrations/
+- Test cases:
+
+  Test 1: Initial migration
+  - Expected: Tạo đúng tables với columns và constraints
+
+  Test 2: Migration rollback
+  - Expected: Down() method xóa đúng tables
+
+--------------------------------------------------------------------------------
+7. KIỂM THỬ DEPENDENCY INJECTION
+--------------------------------------------------------------------------------
+
+TC_WB_DI_001: Service registration trong Program.cs
+- Mô tả: Kiểm tra DI container setup
+- File: Program.cs
+- Test cases:
+
+  Test 1: DbContext registration
+  - Expected: AddDbContext<AppDBContext> (line 13-14)
+
+  Test 2: Identity registration
+  - Expected: AddDefaultIdentity<AppUser> (line 18-20)
+
+  Test 3: Session registration
+  - Expected:
+    * AddDistributedMemoryCache (line 26)
+    * AddSession với timeout 30 phút (line 29-33)
+
+TC_WB_DI_002: Constructor injection
+- Mô tả: Kiểm tra DI trong controllers
+- Test cases:
+
+  Test 1: UserController dependencies
+  - Expected: Constructor nhận:
+    * ILogger<UserController>
+    * AppDBContext
+    * UserManager<AppUser>
+    * IUserStore<AppUser>
+    * SignInManager<AppUser>
+
+  Test 2: CartController dependencies
+  - Expected: Constructor nhận AppDBContext
+
+  Test 3: ProductController dependencies
+  - Expected: Constructor nhận AppDBContext
+
+--------------------------------------------------------------------------------
+8. KIỂM THỬ MIDDLEWARE PIPELINE
+--------------------------------------------------------------------------------
+
+TC_WB_MIDDLEWARE_001: Request pipeline order
+- Mô tả: Kiểm tra thứ tự middleware
+- File: Program.cs (lines 37-75)
+- Test case:
+  - Expected order:
+    1. UseHttpsRedirection (line 48)
+    2. UseStaticFiles (line 51)
+    3. UseSession (line 54)
+    4. UseRouting (line 57)
+    5. UseAuthorization (line 60)
+    6. MapControllerRoute (lines 63-72)
+    7. MapRazorPages (line 75)
+
+TC_WB_MIDDLEWARE_002: Session middleware configuration
+- Mô tả: Kiểm tra session config
+- File: Program.cs (lines 29-33)
+- Test case:
+  - Expected:
+    * Cookie.Name = ".ShoppingCart"
+    * IdleTimeout = 30 minutes
+
+--------------------------------------------------------------------------------
+9. KIỂM THỬ ROUTING
+--------------------------------------------------------------------------------
+
+TC_WB_ROUTE_001: Area routing
+- Mô tả: Kiểm tra route cho Admin area
+- File: Program.cs (lines 63-66)
+- Test cases:
+
+  Test 1: Admin route match
+  - URL: /Admin/Products/Index
+  - Expected: Route đến Admin area, ProductsController, Index action
+
+  Test 2: Non-area route
+  - URL: /Shop/Index
+  - Expected: Route đến default area, ShopController
+
+TC_WB_ROUTE_002: Attribute routing
+- Mô tả: Kiểm tra attribute routes trong controllers
+- Test cases:
+
+  Test 1: CartController routes
+  - [Route("Cart")] → /Cart
+  - [HttpGet("")] → /Cart/Index
+  - [HttpPost("AddAjax")] → /Cart/AddAjax
+
+  Test 2: ProductController routes
+  - [Route("Product")] → /Product
+  - [HttpGet("Detail/{id}")] → /Product/Detail/1
+  - [HttpGet("ListPro/{id}")] → /Product/ListPro/1
+
+TC_WB_ROUTE_003: Default route
+- Mô tả: Kiểm tra default route
+- File: Program.cs (lines 69-72)
+- Test case:
+  - URL: /
+  - Expected: Route đến ShopController, Index action
+
+--------------------------------------------------------------------------------
+10. KIỂM THỬ STATEMENT COVERAGE
+--------------------------------------------------------------------------------
+
+TC_WB_COVERAGE_001: CartController.AddToCartAjax - 100% coverage
+- Mô tả: Đảm bảo mọi statement được thực thi
+- File: Controllers/CartController.cs (lines 86-121)
+- Test cases cần chạy:
+  1. productId không tồn tại → cover lines 90-92
+  2. Product tồn tại, cart trống → cover lines 95-110, 113-120
+  3. Product tồn tại, đã có trong cart → cover lines 95-102, 113-120
+
+TC_WB_COVERAGE_002: UserController.Register - 100% coverage
+- Mô tả: Đảm bảo mọi statement được thực thi
+- File: Controllers/UserController.cs (lines 42-99)
+- Test cases cần chạy:
+  1. ModelState invalid → cover line 98
+  2. CreateAsync thành công → cover lines 48-89
+  3. CreateAsync thất bại → cover lines 48-59, 92-98
+
+TC_WB_COVERAGE_003: ProductController.ListPro - 100% coverage
+- Mô tả: Đảm bảo mọi statement được thực thi
+- File: Controllers/ProductController.cs (lines 31-48)
+- Test cases cần chạy:
+  1. Category có children → cover all lines
+  2. Category không có children → cover all lines
+  3. Category không tồn tại → cover all lines
+
+--------------------------------------------------------------------------------
+11. KIỂM THỬ EXCEPTION HANDLING
+--------------------------------------------------------------------------------
+
+TC_WB_EXCEPTION_001: Database connection failure
+- Mô tả: Kiểm tra xử lý khi database không kết nối được
+- Test case:
+  - Setup: Mock DbContext throw SqlException
+  - Expected: Application hiển thị error page, không crash
+
+TC_WB_EXCEPTION_002: Null reference handling
+- Mô tả: Kiểm tra xử lý null objects
+- Test cases:
+
+  Test 1: Product.Detail với null product
+  - Input: id không tồn tại
+  - Expected: View nhận null, không throw NullReferenceException
+
+  Test 2: Cart operations với null session
+  - Setup: Session = null
+  - Expected: GetCartItems return empty list, không crash
+
+TC_WB_EXCEPTION_003: JSON deserialization error
+- Mô tả: Kiểm tra xử lý khi JSON trong session bị corrupt
+- File: Controllers/CartController.cs (line 27)
+- Test case:
+  - Setup: Session["cart"] = invalid JSON string
+  - Expected: JsonConvert.DeserializeObject throw exception
+  - Need: Try-catch hoặc validation
+
+--------------------------------------------------------------------------------
+12. KIỂM THỬ SECURITY
+--------------------------------------------------------------------------------
+
+TC_WB_SEC_001: SQL Injection prevention
+- Mô tả: Kiểm tra Entity Framework parameterized queries
+- Test case:
+  - Input: productId = "1; DROP TABLE Products--"
+  - Expected: EF sử dụng parameters, không thực thi SQL injection
+
+TC_WB_SEC_002: XSS prevention
+- Mô tả: Kiểm tra Razor encoding
+- Test case:
+  - Input: Product.Name = "<script>alert('XSS')</script>"
+  - Expected: Razor tự động encode, hiển thị text không execute script
+
+TC_WB_SEC_003: Password hashing
+- Mô tả: Kiểm tra Identity password hashing
+- Test case:
+  - Input: Password = "Test@123456"
+  - Expected:
+    * Password được hash trước khi lưu database
+    * Không lưu plain text password
+
+TC_WB_SEC_004: HTTPS redirection
+- Mô tả: Kiểm tra force HTTPS
+- File: Program.cs (line 48)
+- Test case:
+  - Request: http://example.com
+  - Expected: Redirect to https://example.com
+
+TC_WB_SEC_005: CSRF protection
+- Mô tả: Kiểm tra anti-forgery token
+- Test case:
+  - POST request không có __RequestVerificationToken
+  - Expected: Request bị reject (nếu có [ValidateAntiForgeryToken])
+
+
+================================================================================
+                        PHẦN 3: TÓM TẮT & KẾT LUẬN
+================================================================================
+
+TỔNG SỐ TEST CASES:
+- Black Box Testing: 50+ test cases
+- White Box Testing: 60+ test cases
+- Tổng cộng: 110+ test cases
+
+PHẠM VI KIỂM THỬ:
+1. Chức năng nghiệp vụ (Business Logic)
+   - Đăng ký, đăng nhập, đăng xuất
+   - Quản lý sản phẩm và danh mục
+   - Giỏ hàng và thanh toán
+   - Phân quyền admin
+
+2. Kiểm thử kỹ thuật (Technical Testing)
+   - Controller methods và routing
+   - Model validation và relationships
+   - Database operations
+   - Session management
+   - Dependency injection
+   - Security (SQL injection, XSS, HTTPS)
+
+3. Kiểm thử phi chức năng (Non-functional Testing)
+   - Performance (session timeout)
+   - UI/UX (responsive design)
+   - Security (authentication, authorization)
+
+CÔNG CỤ KIỂM THỬ ĐỀ XUẤT:
+- Unit Testing: xUnit, NUnit, MSTest
+- Mocking: Moq, NSubstitute
+- Code Coverage: Coverlet, dotCover
+- Integration Testing: WebApplicationFactory
+- UI Testing: Selenium, Playwright
+- API Testing: Postman, REST Client
+
+ƯU TIÊN KIỂM THỬ:
+1. High Priority:
+   - User authentication (TC_BB_REG_*, TC_BB_LOGIN_*)
+   - Cart operations (TC_BB_CART_*, TC_WB_CART_*)
+   - Security tests (TC_WB_SEC_*)
+
+2. Medium Priority:
+   - Product management (TC_BB_PROD_*, TC_WB_PROD_*)
+   - Admin functions (TC_BB_ADMIN_*)
+   - Model validations (TC_WB_MODEL_*)
+
+3. Low Priority:
+   - UI tests (TC_BB_UI_*)
+   - Coverage tests (TC_WB_COVERAGE_*)
+
+GHI CHÚ:
+- Tất cả test cases cần được automated để regression testing
+- Cần setup CI/CD pipeline để chạy tests tự động
+- Code coverage target: tối thiểu 80%
+- Cần test trên nhiều browsers: Chrome, Firefox, Safari, Edge
+- Cần test trên nhiều devices: Desktop, Tablet, Mobile
+
+================================================================================
+                              KẾT THÚC
+================================================================================

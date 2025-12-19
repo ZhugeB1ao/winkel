@@ -98,16 +98,15 @@ public class UserController : Controller
         return View();
     }
 
-    public IActionResult Login()
+    public IActionResult Login(string returnUrl = "")
     {
+        ViewBag.ReturnUrl = returnUrl;
         return View();
     }
     
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "")
     {
-        // returnUrl ??= Url.Content("~/");
-        // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (ModelState.IsValid)
         {
             // This doesn't count login failures towards account lockout
@@ -116,17 +115,16 @@ public class UserController : Controller
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
+                
+                // If returnUrl is provided and is a local URL, redirect there
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                
+                // Default: redirect to Shop
                 return RedirectToAction("Index", "Shop");
             }
-            // if (result.RequiresTwoFactor)
-            // {
-            //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            // }
-            // if (result.IsLockedOut)
-            // {
-            //     _logger.LogWarning("User account locked out.");
-            //     return RedirectToPage("./Lockout");
-            // }
             else
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -140,6 +138,10 @@ public class UserController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
+        
+        // Clear all session data (cart, etc.)
+        HttpContext.Session.Clear();
+        
         return RedirectToAction("Index", "Home");
     }
 

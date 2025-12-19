@@ -25,6 +25,8 @@
 	    <link rel="stylesheet" href="~/assets/css/flaticon.css">
 	    <link rel="stylesheet" href="~/assets/css/icomoon.css">
 	    <link rel="stylesheet" href="~/assets/css/style.css">
+    	<link rel="stylesheet" href="~/assets/css/cart-custom.css">
+    	<link rel="stylesheet" href="~/css/toast.css">
 	</head>
 	<body class="goto-here">
 		<div class="py-1 bg-black">
@@ -67,13 +69,13 @@
               		<a class="dropdown-item" asp-controller="Shop" asp-action="Index">Shop</a>
 	                @* <a class="dropdown-item" asp-controller="Shop" asp-action="ProductSingle">Single Product</a> *@
 	                <a class="dropdown-item" asp-controller="Cart" asp-action="Index">Cart</a>
-	                <a class="dropdown-item" asp-controller="Checkout" asp-action="Index">Checkout</a>
+	                @* <a class="dropdown-item" asp-controller="Checkout" asp-action="Index">Checkout</a> *@
 	              </div>
 	            </li>
 		          <li class="nav-item"><a asp-controller="About" asp-action="Index" class="nav-link">About</a></li>
 		          <li class="nav-item"><a asp-controller="Blog" asp-action="Index" class="nav-link">Blog</a></li>
 		          <li class="nav-item"><a asp-controller="Contact" asp-action="Index" class="nav-link">Contact</a></li>
-		          <li class="nav-item cta cta-colored"><a asp-controller="Cart" asp-action="Index" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+		          <li class="nav-item cta cta-colored"><a asp-controller="Cart" asp-action="Index" class="nav-link"><span class="icon-shopping_cart"></span>[@await Component.InvokeAsync("CartCount")]</a></li>
 
 		        </ul>
 		      </div>
@@ -196,6 +198,7 @@
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 		<script src="~/assets/js/google-map.js"></script>
 		<script src="~/assets/js/main.js"></script>
+		<script src="~/assets/js/cart.js?v=5"></script>
 		@RenderSection("Scripts", required: false)
 	</body>
 </html>

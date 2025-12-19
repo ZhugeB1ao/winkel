@@ -59,23 +59,27 @@
 		      </button>
 
 		      <div class="collapse navbar-collapse" id="ftco-nav">
-		        <ul class="navbar-nav ml-auto">
-		          <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
-		          <li class="nav-item dropdown active">
-	              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-	              <div class="dropdown-menu" aria-labelledby="dropdown04">
-              		<a class="dropdown-item" asp-controller="Shop" asp-action="Index">Shop</a>
-	                @* <a class="dropdown-item" asp-controller="Shop" asp-action="ProductSingle">Single Product</a> *@
-	                <a class="dropdown-item" asp-controller="Cart" asp-action="Index">Cart</a>
-	                <a class="dropdown-item" asp-controller="Checkout" asp-action="Index">Checkout</a>
-	              </div>
-	            </li>
-		          <li class="nav-item"><a asp-controller="About" asp-action="Index" class="nav-link">About</a></li>
-		          <li class="nav-item"><a asp-controller="Blog" asp-action="Index" class="nav-link">Blog</a></li>
-		          <li class="nav-item"><a asp-controller="Contact" asp-action="Index" class="nav-link">Contact</a></li>
-		          <li class="nav-item cta cta-colored"><a asp-controller="Cart" asp-action="Index" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+			      <ul class="navbar-nav ml-auto">
+				      <li class="nav-item"><a asp-controller="Products" asp-action="Index" class="nav-link">Products</a></li>
+				      <li class="nav-item"><a asp-controller="Categories" asp-action="Index" class="nav-link">Categories</a></li>
+				      @* <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li> *@
+				      @* *@
+				      @* <li class="nav-item dropdown active"> *@
+					     @*  <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a> *@
+					     @*  <div class="dropdown-menu" aria-labelledby="dropdown04"> *@
+						    @*   <a class="dropdown-item" asp-controller="Shop" asp-action="Index">Shop</a> *@
+						    @*   $1$ <a class="dropdown-item" asp-controller="Shop" asp-action="ProductSingle">Single Product</a> #1# *@
+						    @*   <a class="dropdown-item" asp-controller="Cart" asp-action="Index">Cart</a> *@
+						    @*   <a class="dropdown-item" asp-controller="Checkout" asp-action="Index">Checkout</a> *@
+					     @*  </div> *@
+				      @* </li> *@
+				      @* *@
+				      @* <li class="nav-item"><a asp-controller="About" asp-action="Index" class="nav-link">About</a></li> *@
+				      @* <li class="nav-item"><a asp-controller="Blog" asp-action="Index" class="nav-link">Blog</a></li> *@
+				      @* <li class="nav-item"><a asp-controller="Contact" asp-action="Index" class="nav-link">Contact</a></li> *@
+				      @* <li class="nav-item cta cta-colored"><a asp-controller="Cart" asp-action="Index" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li> *@
 
-		        </ul>
+			      </ul>
 		      </div>
 		    </div>
 		  </nav>

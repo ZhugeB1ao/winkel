@@ -1,0 +1,45 @@
+/* Toast Notification Styles */
+.custom-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 300px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+}
+
+.custom-toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.custom-toast-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.custom-toast-error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.custom-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-toast-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.custom-toast-message {
+    font-size: 14px;
+    font-weight: 500;
+}

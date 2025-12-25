@@ -10,10 +10,12 @@ namespace WebApplication1.Controllers;
 public class CheckoutController : Controller
 {
     private readonly UserManager<AppUser> _userManager;
-    
-    public CheckoutController(UserManager<AppUser> userManager)
+    private readonly AppDBContext _context;
+
+    public CheckoutController(UserManager<AppUser> userManager, AppDBContext context)
     {
         _userManager = userManager;
+        _context = context;
     }
     
     public const string CARTKEY = "cart";
@@ -54,5 +56,70 @@ public class CheckoutController : Controller
         ViewBag.Discount = 0;
         ViewBag.Total = ViewBag.SubTotal + ViewBag.Delivery - ViewBag.Discount;
         return View(cart);
+    }
+
+    [HttpPost("PlaceOrder")]
+    public async Task<IActionResult> PlaceOrder()
+    {
+        // Check if user is logged in
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "User", new { returnUrl = "/Checkout" });
+        }
+        
+        // Get current user
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "User");
+        }
+        
+        // Get cart items
+        var cart = GetCartItems();
+        if (cart == null || cart.Count == 0)
+        {
+            TempData["Error"] = "Your cart is empty.";
+            return RedirectToAction("Index", "Cart");
+        }
+        
+        // Create new order
+        var order = new Order
+        {
+            UserId = user.Id,
+            Status = "Pending", // or "Processing", "Completed", etc.
+            CreatedAt = DateTime.Now,
+            OrderProducts = new List<OrderProduct>()
+        };
+        
+        // Add order products from cart
+        foreach (var cartItem in cart)
+        {
+            if (cartItem.Product != null)
+            {
+                order.OrderProducts.Add(new OrderProduct
+                {
+                    ProductId = cartItem.Product.Id,
+                    Quantity = cartItem.Quantity,
+                    Price = cartItem.Product.Price 
+                });
+            }
+        }
+        
+        // Save order to database
+        _context.Orders.Add(order);
+        await _context.SaveChangesAsync();
+        
+        // Clear cart
+        HttpContext.Session.Remove(CARTKEY);
+        
+        // Redirect to success page
+        return RedirectToAction("OrderSuccess", new { orderId = order.Id });
+    }
+
+    [HttpGet("OrderSuccess")]
+    public IActionResult OrderSuccess(int? orderId)
+    {
+        ViewBag.OrderId = orderId;
+        return View();
     }
 }

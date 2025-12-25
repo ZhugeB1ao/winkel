@@ -11,8 +11,8 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-area="Admin" asp-controller="Products" asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
@@ -20,31 +20,34 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
+                    <input asp-for="Price" type="number" step="0.01" min="0" class="form-control" placeholder="0.00" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Slug" class="control-label"></label>
-                    <input asp-for="Slug" class="form-control" />
+                    <input asp-for="Slug" type="text" class="form-control" placeholder="product-slug" />
                     <span asp-validation-for="Slug" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="CategoryId" class="control-label"></label>
-                    <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                        <option value="">-- Select Category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Picture" class="control-label"></label>
-                    <input asp-for="Picture" class="form-control" />
+                    <input asp-for="Picture" type="text" class="form-control" placeholder="https://example.com/product.jpg" />
                     <span asp-validation-for="Picture" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Sales" class="control-label"></label>
-                    <input asp-for="Sales" class="form-control" />
+                    <input asp-for="Sales" type="number" min="0" step="1" class="form-control" value="0" />
                     <span asp-validation-for="Sales" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -55,6 +58,10 @@
     </div>
 
     <div class="mb-5">
-        <a asp-action="Index">Back to List</a>
+        <a asp-area="Admin" asp-controller="Products" asp-action="Index">Back to List</a>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

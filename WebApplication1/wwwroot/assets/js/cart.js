@@ -114,6 +114,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Selector: input with class "quantity" inside element with class "cart-item-row"
     const quantityInputs = document.querySelectorAll('.cart-item-row input.quantity');
     
+        // Attach event listeners to each quantity input
+    quantityInputs.forEach(input => {
+        // Save initial value to attribute for later comparison
+        // Example: <input value="2" data-original-value="2">
+        input.setAttribute('data-original-value', input.value);
+        
+        // === EVENT: BLUR (click outside input) ===
+        // When user clicks outside input → send update request
+        input.addEventListener('blur', function() {
+            // this = input element that triggered the event
+            updateQuantityOnServer(this);
+        });
+        
+        // === EVENT: KEYPRESS (key pressed) ===
+        // When user presses Enter → trigger blur to save
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();  // Prevent form submit (if any)
+                this.blur();         // Trigger blur event → call updateQuantityOnServer
+            }
+        });
+    });
+    
     // Function to send quantity update request to server
     function updateQuantityOnServer(input) {
         // Find the row containing this input
@@ -195,29 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('An error occurred. Please try again.', 'error');
         });
     }
-
-    // Attach event listeners to each quantity input
-    quantityInputs.forEach(input => {
-        // Save initial value to attribute for later comparison
-        // Example: <input value="2" data-original-value="2">
-        input.setAttribute('data-original-value', input.value);
-        
-        // === EVENT: BLUR (click outside input) ===
-        // When user clicks outside input → send update request
-        input.addEventListener('blur', function() {
-            // this = input element that triggered the event
-            updateQuantityOnServer(this);
-        });
-        
-        // === EVENT: KEYPRESS (key pressed) ===
-        // When user presses Enter → trigger blur to save
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();  // Prevent form submit (if any)
-                this.blur();         // Trigger blur event → call updateQuantityOnServer
-            }
-        });
-    });
 
     /* ============================================================================
      * SECTION 3: REMOVE PRODUCT FROM CART

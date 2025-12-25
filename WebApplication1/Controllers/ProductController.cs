@@ -44,47 +44,14 @@ public class ProductController : Controller
             .Where(p => childCategoryIds.Contains(p.CategoryId))
             .ToList();
 
-        return View("../Shop/Index", products);
+        var latestProducts = products
+            .OrderByDescending(p => p.Id)
+            .Take(4)
+            .ToList();
+            
+        ViewBag.LatestProducts = latestProducts;
+
+        return View("../Product/ListPro", products);
     }
-    
-    // [HttpGet("{slug}")]
-    // public IActionResult Index(string slug)
-    // {
-    //     // Get product info and category that product belong to
-    //     var product = _context.Products
-    //         .Include(p => p.Category)
-    //         .FirstOrDefault(p => p.Slug == slug);
-    //
-    //     if (product == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     var categories = _context.Categories.ToList();
-    //     
-    //     // Get parent group 
-    //     var parent = product.Category.Parent ?? product.Category;
-    //
-    //     // get id from other category in the same group
-    //     var childIds = parent.Children.Select(c => c.Id).ToList();
-    //     childIds.Add(parent.Id);
-    //     
-    //     // Get related product
-    //     var relatedProducts = _context.Products
-    //         .Where(p => childIds.Contains(p.CategoryId) && p.Slug != slug)
-    //         .Take(4)
-    //         .ToList();
-    //
-    //     var view = new ShopView
-    //     {
-    //         Categories = categories,
-    //         Products = relatedProducts,
-    //         CurrentProduct = product,
-    //             CurrentCategory = product.Category
-    //     };
-    //
-    //     return View(view);
-    // }
-    
     
 }

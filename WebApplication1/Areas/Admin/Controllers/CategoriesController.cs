@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using WebApplication1.Models;
 namespace WebApplication1.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly AppDBContext _context;
@@ -49,7 +51,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public IActionResult Create()
         {
-            ViewData["ParentId"] = new SelectList(_context.Categories, "Id", "Id");
+            // Only show root categories (categories with ParentId == null)
+            var rootCategories = _context.Categories.Where(c => c.ParentId == null).ToList();
+            ViewData["ParentId"] = new SelectList(rootCategories, "Id", "Name");
             return View();
         }
 
@@ -66,7 +70,9 @@ namespace WebApplication1.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentId"] = new SelectList(_context.Categories, "Id", "Id", category.ParentId);
+            // Only show root categories (categories with ParentId == null)
+            var rootCategories = _context.Categories.Where(c => c.ParentId == null).ToList();
+            ViewData["ParentId"] = new SelectList(rootCategories, "Id", "Name", category.ParentId);
             return View(category);
         }
 

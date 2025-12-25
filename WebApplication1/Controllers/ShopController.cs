@@ -21,53 +21,14 @@ public class ShopController : Controller
     public IActionResult Index()
     {
         List<Product> products = _context.Products.ToList();
+        
+        var latestProducts = products
+            .OrderByDescending(p => p.Id)
+            .Take(4)
+            .ToList();
+            
+        ViewBag.LatestProducts = latestProducts;
         return View(products);
     }
     
-    
-
-    // [HttpGet("{slug?}")]
-    // public IActionResult Index(string? slug)
-    // {
-    //     var categories = _context.Categories.ToList();
-    //
-    //     if (string.IsNullOrEmpty(slug))
-    //     {
-    //         var viewAll = new ShopView
-    //         {
-    //             Categories = categories,
-    //             Products = _context.Products.ToList(),
-    //             CurrentCategory = null
-    //         };
-    //         return View(viewAll);
-    //     }
-    //
-    //     var currentCategory = categories.FirstOrDefault(c => c.Slug == slug);
-    //
-    //     if (currentCategory == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     // Get id of all children category
-    //     var subCategoryIds = categories
-    //         .Where(c => c.ParentId == currentCategory.Id)
-    //         .Select(c => c.Id)
-    //         .ToList();
-    //
-    //     subCategoryIds.Add(currentCategory.Id);
-    //
-    //     var products = _context.Products
-    //         .Where(p => subCategoryIds.Contains(p.CategoryId))
-    //         .ToList();
-    //
-    //     var view = new ShopView
-    //     {
-    //         Categories = categories,
-    //         Products = products,
-    //         // CurrentCategory = currentCategory
-    //     };
-    //
-    //     return View(view);
-    // }
 }

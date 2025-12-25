@@ -86,7 +86,7 @@ public class CartController : Controller
         
         SaveCart(cart);
         
-        // Tính toán lại totals
+        // recalculate totals
         double subtotal = cart.Sum(c => (c.Product.Price ?? 0) * c.Quantity);
         double delivery = 0;
         double discount = 0;
@@ -116,7 +116,7 @@ public class CartController : Controller
             cart.Remove(cartItem);
             SaveCart(cart);
             
-            // Tính toán lại totals
+            // recalculate totals
             double subtotal = cart.Sum(c => (c.Product.Price ?? 0) * c.Quantity);
             double delivery = 0;
             double discount = 0;
@@ -149,7 +149,7 @@ public class CartController : Controller
             cartItem.Quantity = request.Quantity;
             SaveCart(cart);
             
-            // Tính toán lại
+            // recalculate totals
             double subtotal = cart.Sum(c => (c.Product.Price ?? 0) * c.Quantity);
             double delivery = 0;
             double discount = 0;

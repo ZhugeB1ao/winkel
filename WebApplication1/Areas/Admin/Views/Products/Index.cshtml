@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <h1>Index</h1>
+    <h1>Products</h1>
 
     <p>
         <a asp-action="Create">Create New</a>
@@ -52,8 +52,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Slug)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Picture)
+                <td style="width: 440px; vertical-align: middle;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="@item.Picture" style="max-width: 60px; max-height: 40px; border: 1px solid #ccc; background: #fff;" />
+                        <a href="@item.Picture" target="_blank" style="word-break: break-all;">@item.Picture</a>
+                    </div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Sales)

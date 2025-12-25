@@ -52,39 +52,16 @@ public class UserController : Controller
             user.Address = model.Address;
             user.EmailConfirmed = true;
             
+            // Set username into database
             await _userStore.SetUserNameAsync(user, model.Email, CancellationToken.None);
-            
-            // await _emailStore.SetEmailAsync(user, model.Email, CancellationToken.None);
-            
+                        
+            // Encrypt password and set username into database
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
-
-                // var userId = await _userManager.GetUserIdAsync(user);
-                // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                // var callbackUrl = Url.Page(
-                //     "/Account/ConfirmEmail",
-                //     pageHandler: null,
-                //     values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                //     protocol: Request.Scheme);
-                //
-                // await _emailSender.SendEmailAsync(model.Email, "Confirm your email",
-                //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                
-                // if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                // {
-                //     return RedirectToPage("RegisterConfirmation",
-                //         new { email = model.Email, returnUrl = returnUrl });
-                // }
-                // else
-                // {
-                //     await _signInManager.SignInAsync(user, isPersistent: false);
-                //     return LocalRedirect(returnUrl);
-                // }
-                
+                await _userManager.AddToRoleAsync(user, "User");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Shop");
             }
@@ -115,15 +92,21 @@ public class UserController : Controller
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
-                
-                // If returnUrl is provided and is a local URL, redirect there
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    return Redirect(returnUrl);
+                    return RedirectToAction("Index", "Products", new { area = "Admin" });
                 }
-                
-                // Default: redirect to Shop
-                return RedirectToAction("Index", "Shop");
+                else
+                {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+
+                    return RedirectToAction("Index", "Shop");
+                }
+             
             }
             else
             {

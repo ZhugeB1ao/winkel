@@ -1,0 +1,20 @@
+@using Microsoft.AspNetCore.Identity
+@using winkel.AppData
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager 
+
+@if (SignInManager.IsSignedIn(User))
+{
+        <a class="text-white" asp-area="" >@UserManager.GetUserName(User)!</a> 
+        <p class="text-white m-0 mx-2">|</p>
+        <a class="text-white" asp-area="" asp-action="Logout" asp-controller="User">Logout</a>
+}
+else
+{ 
+        <a class="text-white" asp-area="" asp-action="Register" asp-controller="User">Register</a>
+        <p class="text-white m-0 mx-2">|</p>
+        <a class="text-white" asp-area="" asp-action="Login" asp-controller="User">Login</a>
+}
+
+ 

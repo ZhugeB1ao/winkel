@@ -1,0 +1,33 @@
+@using System.Security.Cryptography
+@model List<winkel.Models.Product>
+@{
+	Layout = "_LayoutShop";
+}
+@if (Model.Count == 0 || Model == null)
+{
+    <h3>No Products found in this category</h3>
+}
+else
+{
+	<div class="row">
+		@foreach (var product in Model)
+		{
+			@await Html.PartialAsync("_ProductItem", product)
+		}
+	</div>
+
+	<div class="row mt-5">
+		<div class="col text-center">
+			<div class="block-27">
+				<ul>
+					<li><a href="#">&lt;</a></li>
+					<li class="active"><span>1</span></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">&gt;</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+}
